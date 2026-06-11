@@ -2,216 +2,39 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мой Личный Остров</title>
     <style>
         @import url('https://googleapis.com');
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        
-        body {
-            background-color: #0b0a09;
-            color: #E6E4E2;
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-            padding: 20px 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .container {
-            max-width: 600px;
-            width: 100%;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        header h1 {
-            font-family: 'Tenor Sans', sans-serif;
-            font-size: 28px;
-            color: #FFFFFF;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-
-        header p {
-            color: #D4A373;
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .card {
-            background-color: #151311;
-            border: 1px solid rgba(212, 163, 115, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        h2 {
-            font-family: 'Tenor Sans', sans-serif;
-            font-size: 18px;
-            color: #FFFFFF;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(212, 163, 115, 0.2);
-            padding-bottom: 8px;
-            letter-spacing: 1px;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        @media (max-width: 480px) {
-            .input-group.responsive {
-                flex-direction: column;
-            }
-        }
-
-        input {
-            width: 100%;
-            background: #0b0a09;
-            border: 1px solid rgba(212, 163, 115, 0.3);
-            border-radius: 6px;
-            padding: 12px;
-            color: #FFFFFF;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #D4A373;
-        }
-
-        .action-btn {
-            background: #D4A373;
-            color: #151311;
-            border: none;
-            padding: 14px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-        }
-
-        .action-btn:hover {
-            background: #e5b382;
-        }
-
-        .habit-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .habit-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 14px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .habit-item.done {
-            border-color: #D4A373;
-            background: rgba(212, 163, 115, 0.04);
-        }
-
-        .habit-text-node {
-            font-size: 15px;
-            font-weight: 500;
-            flex: 1;
-            margin-right: 10px;
-            word-break: break-word;
-        }
-
-        .habit-item.done .habit-text-node {
-            text-decoration: line-through;
-            color: #8C8885;
-        }
-
-        .btn-box {
-            display: flex;
-            gap: 6px;
-        }
-
-        .habit-btn {
-            background: rgba(212, 163, 115, 0.1);
-            border: 1px solid rgba(212, 163, 115, 0.3);
-            color: #FFFFFF;
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-        }
-
-        .habit-item.done .habit-btn {
-            background: #D4A373;
-            color: #151311;
-            border-color: #D4A373;
-        }
-
-        .del-btn {
-            background: rgba(255, 0, 0, 0.1);
-            border: 1px solid rgba(255, 0, 0, 0.2);
-            color: #FF6B6B;
-        }
-
-        .budget-display {
-            font-size: 36px;
-            font-weight: 700;
-            color: #D4A373;
-            text-align: center;
-            background: rgba(255,255,255,0.01);
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.05);
-            margin-bottom: 15px;
-        }
-
-        .history-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-height: 180px;
-            overflow-y: auto;
-            margin-top: 15px;
-            padding-right: 5px;
-        }
-
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            padding: 8px 12px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.01);
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #0b0a09; color: #E6E4E2; font-family: 'Inter', sans-serif; min-height: 100vh; padding: 20px 12px; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 600px; width: 100%; }
+        header { text-align: center; margin-bottom: 25px; }
+        header h1 { font-family: 'Tenor Sans', sans-serif; font-size: 28px; color: #FFFFFF; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 6px; }
+        header p { color: #D4A373; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+        .card { background-color: #151311; border: 1px solid rgba(212, 163, 115, 0.1); border-radius: 12px; padding: 20px; margin-bottom: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        h2 { font-family: 'Tenor Sans', sans-serif; font-size: 18px; color: #FFFFFF; margin-bottom: 15px; border-bottom: 1px solid rgba(212, 163, 115, 0.2); padding-bottom: 8px; letter-spacing: 1px; }
+        .input-group { display: flex; gap: 10px; margin-bottom: 12px; }
+        @media (max-width: 480px) { .input-group.responsive { flex-direction: column; } }
+        input { width: 100%; background: #0b0a09; border: 1px solid rgba(212, 163, 115, 0.3); border-radius: 6px; padding: 12px; color: #FFFFFF; font-family: 'Inter', sans-serif; font-size: 16px; }
+        .action-btn { background: #D4A373; color: #151311; border: none; padding: 14px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; }
+        .action-btn:hover { background: #e5b382; }
+        .habit-list { display: flex; flex-direction: column; gap: 10px; }
+        .habit-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+        .habit-item.done { border-color: #D4A373; background: rgba(212, 163, 115, 0.04); }
+        .habit-text-node { font-size: 15px; font-weight: 500; flex: 1; margin-right: 10px; word-break: break-word; }
+        .habit-item.done .habit-text-node { text-decoration: line-through; color: #8C8885; }
+        .btn-box { display: flex; gap: 6px; }
+        .habit-btn { background: rgba(212, 163, 115, 0.1); border: 1px solid rgba(212, 163, 115, 0.3); color: #FFFFFF; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+        .habit-item.done .habit-btn { background: #D4A373; color: #151311; border-color: #D4A373; }
+        .del-btn { background: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.2); color: #FF6B6B; }
+        .budget-display { font-size: 36px; font-weight: 700; color: #D4A373; text-align: center; background: rgba(255,255,255,0.01); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px; }
+        .history-list { display: flex; flex-direction: column; gap: 8px; max-height: 180px; overflow-y: auto; margin-top: 15px; padding-right: 5px; }
+        .history-item { display: flex; justify-content: space-between; font-size: 13px; padding: 8px 12px; border-radius: 6px; background: rgba(255, 255, 255, 0.01); }
         .history-item.plus-type { color: #81C784; border-left: 3px solid #81C784; }
         .history-item.minus-type { color: #E57373; border-left: 3px solid #E57373; }
         .history-comment { color: #8C8885; margin-left: 8px; }
-
-        .reset-btn {
-            background: rgba(255, 0, 0, 0.1);
-            border: 1px solid rgba(255, 0, 0, 0.3);
-            color: #FF6B6B;
-            margin-top: 15px;
-            width: 100%;
-        }
+        .reset-btn { background: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.3); color: #FF6B6B; margin-top: 15px; width: 100%; }
     </style>
 </head>
 <body>
@@ -253,29 +76,24 @@
     </div>
 
     <script>
-        // Инициализация базы данных
-        let appBalance = parseInt(localStorage.getItem('saved_app_balance')) || 15000;
-        let appTasks = JSON.parse(localStorage.getItem('saved_app_tasks')) || [
+        // Чистые переменные без localStorage, чтобы исключить любые блокировки
+        let appBalance = 15000;
+        let appTasks = [
             { id: 1, name: "Выпить 2л воды", isDone: false },
             { id: 2, name: "Потренироваться / Зал", isDone: false }
         ];
-        let appHistory = JSON.parse(localStorage.getItem('saved_app_history')) || [];
+        let appHistory = [];
 
         function refreshFinances() {
             document.getElementById('balanceView').textContent = appBalance.toLocaleString('ru-RU') + ' ₽';
-            localStorage.setItem('saved_app_balance', appBalance);
-            
             const histContainer = document.getElementById('historyContainer');
             histContainer.innerHTML = '';
             appHistory.slice().reverse().forEach(item => {
                 const el = document.createElement('div');
                 el.className = `history-item ${item.mode === 'plus' ? 'plus-type' : 'minus-type'}`;
-                el.innerHTML = `
-                    <span>${item.mode === 'plus' ? '+' : '-'}${item.cash.toLocaleString('ru-RU')} ₽ <span class="history-comment">(${item.reason})</span></span>
-                `;
+                el.innerHTML = `<span>${item.mode === 'plus' ? '+' : '-'}${item.cash.toLocaleString('ru-RU')} ₽ <span class="history-comment">(${item.reason})</span></span>`;
                 histContainer.appendChild(el);
             });
-            localStorage.setItem('saved_app_history', JSON.stringify(appHistory));
         }
 
         function executeMoneyOp(mode) {
@@ -287,7 +105,6 @@
             if (!isNaN(val) && val > 0) {
                 if (mode === 'plus') appBalance += val;
                 if (mode === 'minus') appBalance -= val;
-                
                 appHistory.push({ cash: val, reason: textReason, mode: mode });
                 refreshFinances();
                 amtIn.value = '';
@@ -300,10 +117,56 @@
         function drawTasks() {
             const container = document.getElementById('habitListContainer');
             container.innerHTML = '';
-            
             appTasks.forEach(task => {
                 const row = document.createElement('div');
                 row.className = `habit-item ${task.isDone ? 'done' : ''}`;
                 row.innerHTML = `
                     <span class="habit-text-node">${task.name}</span>
                     <div class="btn-box">
+                        <button class="habit-btn" onclick="switchTaskState(${task.id})">${task.isDone ? 'Отменить' : 'Выполнено'}</button>
+                        <button class="habit-btn del-btn" onclick="removeTaskItem(${task.id})">✕</button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function addNewTask() {
+            const input = document.getElementById('customHabitInput');
+            const taskName = input.value.trim();
+            if (taskName !== '') {
+                appTasks.push({ id: Date.now(), name: taskName, isDone: false });
+                drawTasks();
+                input.value = '';
+            } else {
+                alert('Бро, напиши название задачи!');
+            }
+        }
+
+        function switchTaskState(id) {
+            appTasks = appTasks.map(t => { if (t.id === id) t.isDone = !t.isDone; return t; });
+            drawTasks();
+        }
+
+        function removeTaskItem(id) {
+            appTasks = appTasks.filter(t => t.id !== id);
+            drawTasks();
+        }
+
+        function triggerFullReset() {
+            appBalance = 15000;
+            appHistory = [];
+            appTasks = [
+                { id: 1, name: "Выпить 2л воды", isDone: false },
+                { id: 2, name: "Потренироваться / Зал", isDone: false }
+            ];
+            refreshFinances();
+            drawTasks();
+        }
+
+        // Стартуем сразу без ожидания
+        refreshFinances();
+        drawTasks();
+    </script>
+</body>
+</html>
