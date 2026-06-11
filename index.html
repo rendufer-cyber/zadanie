@@ -2,13 +2,12 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <!-- Важно для мобилок: запрещает браузеру криво масштабировать страницу -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Мой Личный Остров</title>
     <style>
         @import url('https://googleapis.com');
         
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         body {
             background-color: #0b0a09;
@@ -66,14 +65,12 @@
             letter-spacing: 1px;
         }
 
-        /* Исправленная мобильная сетка для полей ввода */
         .input-group {
             display: flex;
             gap: 10px;
             margin-bottom: 12px;
         }
 
-        /* На мобилках инпуты встанут друг под друга, чтобы не перекрывать кнопки */
         @media (max-width: 480px) {
             .input-group.responsive {
                 flex-direction: column;
@@ -81,7 +78,6 @@
         }
 
         input {
-            flex: 1;
             width: 100%;
             background: #0b0a09;
             border: 1px solid rgba(212, 163, 115, 0.3);
@@ -89,7 +85,7 @@
             padding: 12px;
             color: #FFFFFF;
             font-family: 'Inter', sans-serif;
-            font-size: 15px; /* 15px защищает от авто-зума на iOS */
+            font-size: 16px;
         }
 
         input:focus {
@@ -101,16 +97,17 @@
             background: #D4A373;
             color: #151311;
             border: none;
-            padding: 12px 20px;
+            padding: 14px 20px;
             border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
             font-family: 'Inter', sans-serif;
             font-size: 14px;
-            transition: all 0.2s ease;
         }
 
-        .action-btn:hover { background: #e5b382; }
+        .action-btn:hover {
+            background: #e5b382;
+        }
 
         .habit-list {
             display: flex;
@@ -138,7 +135,7 @@
             font-weight: 500;
             flex: 1;
             margin-right: 10px;
-            word-break: break-word; /* Защита от длинного текста */
+            word-break: break-word;
         }
 
         .habit-item.done .habit-text-node {
@@ -240,10 +237,9 @@
             <h2>Личный бюджет и История</h2>
             <div class="budget-display" id="balanceView">15 000 ₽</div>
             
-            <!-- Добавлен класс responsive для корректного отображения на смартфонах -->
             <div class="input-group responsive">
                 <input type="number" id="moneyAmountInput" placeholder="Сумма, ₽">
-                <input type="text" id="moneySourceInput" placeholder="Откуда / На что (например: Чаевые, Обед)">
+                <input type="text" id="moneySourceInput" placeholder="Откуда / На что">
             </div>
             <div class="input-group">
                 <button class="action-btn" style="flex: 1;" id="minusMoneyBtn">Вычесть</button>
@@ -257,7 +253,7 @@
     </div>
 
     <script>
-        // Изолированное и безопасное хранилище данных
+        // Инициализация базы данных
         let appBalance = parseInt(localStorage.getItem('saved_app_balance')) || 15000;
         let appTasks = JSON.parse(localStorage.getItem('saved_app_tasks')) || [
             { id: 1, name: "Выпить 2л воды", isDone: false },
@@ -282,13 +278,6 @@
             localStorage.setItem('saved_app_history', JSON.stringify(appHistory));
         }
 
-        document.getElementById('plusMoneyBtn').onclick = function() {
-            executeMoneyOp('plus');
-        };
-        document.getElementById('minusMoneyBtn').onclick = function() {
-            executeMoneyOp('minus');
-        };
-
         function executeMoneyOp(mode) {
             const amtIn = document.getElementById('moneyAmountInput');
             const srcIn = document.getElementById('moneySourceInput');
@@ -303,3 +292,21 @@
                 refreshFinances();
                 amtIn.value = '';
                 srcIn.value = '';
+            } else {
+                alert('Бро, введи нормальную сумму!');
+            }
+        }
+
+        function drawTasks() {
+            const container = document.getElementById('habitListContainer');
+            container.innerHTML = '';
+            
+            appTasks.forEach(task => {
+                const row = document.createElement('div');
+                row.className = `habit-item ${task.isDone ? 'done' : ''}`;
+                
+                const textSpan = document.createElement('span');
+                textSpan.className = 'habit-text-node';
+                textSpan.textContent = task.name;
+                row.appendChild(textSpan);
+
