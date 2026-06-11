@@ -227,7 +227,7 @@
             <h2>Планы на сегодня</h2>
             <div class="input-group">
                 <input type="text" id="customHabitInput" placeholder="Добавить свой план...">
-                <button class="action-btn" id="addHabitBtn">Добавить</button>
+                <button class="action-btn" onclick="addNewTask()">Добавить</button>
             </div>
             <div class="habit-list" id="habitListContainer"></div>
         </div>
@@ -242,18 +242,18 @@
                 <input type="text" id="moneySourceInput" placeholder="Откуда / На что">
             </div>
             <div class="input-group">
-                <!-- ДОБАВИЛ ПРОПУЩЕННЫЕ ID ДЛЯ КНОПОК -->
-                <button class="action-btn" style="flex: 1;" id="minusMoneyBtn">Вычесть</button>
-                <button class="action-btn" style="flex: 1; background: #E6E4E2;" id="plusMoneyBtn">Добавить</button>
+                <button class="action-btn" style="flex: 1;" onclick="executeMoneyOp('minus')">Вычесть</button>
+                <button class="action-btn" style="flex: 1; background: #E6E4E2;" onclick="executeMoneyOp('plus')">Добавить</button>
             </div>
 
             <div class="history-list" id="historyContainer"></div>
             
-            <button class="action-btn reset-btn" id="fullResetBtn">Сбросить всё</button>
+            <button class="action-btn reset-btn" onclick="triggerFullReset()">Сбросить всё</button>
         </div>
     </div>
 
     <script>
+        // Инициализация базы данных
         let appBalance = parseInt(localStorage.getItem('saved_app_balance')) || 15000;
         let appTasks = JSON.parse(localStorage.getItem('saved_app_tasks')) || [
             { id: 1, name: "Выпить 2л воды", isDone: false },
@@ -304,7 +304,6 @@
             appTasks.forEach(task => {
                 const row = document.createElement('div');
                 row.className = `habit-item ${task.isDone ? 'done' : ''}`;
-                
-                const textSpan = document.createElement('span');
-                textSpan.className = 'habit-text-node';
-                textSpan.textContent = task.name;
+                row.innerHTML = `
+                    <span class="habit-text-node">${task.name}</span>
+                    <div class="btn-box">
