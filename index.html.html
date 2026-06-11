@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <!-- Важно для мобилок: запрещает браузеру криво масштабировать страницу -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Мой Личный Остров</title>
+    <style>
+        @import url('https://googleapis.com');
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: #0b0a09;
+            color: #E6E4E2;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 20px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-family: 'Tenor Sans', sans-serif;
+            font-size: 28px;
+            color: #FFFFFF;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            color: #D4A373;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .card {
+            background-color: #151311;
+            border: 1px solid rgba(212, 163, 115, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            font-family: 'Tenor Sans', sans-serif;
+            font-size: 18px;
+            color: #FFFFFF;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(212, 163, 115, 0.2);
+            padding-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        /* Исправленная мобильная сетка для полей ввода */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        /* На мобилках инпуты встанут друг под друга, чтобы не перекрывать кнопки */
+        @media (max-width: 480px) {
+            .input-group.responsive {
+                flex-direction: column;
+            }
+        }
+
+        input {
+            flex: 1;
+            width: 100%;
+            background: #0b0a09;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            border-radius: 6px;
+            padding: 12px;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px; /* 15px защищает от авто-зума на iOS */
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #D4A373;
+        }
+
+        .action-btn {
+            background: #D4A373;
+            color: #151311;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover { background: #e5b382; }
+
+        .habit-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .habit-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .habit-item.done {
+            border-color: #D4A373;
+            background: rgba(212, 163, 115, 0.04);
+        }
+
+        .habit-text-node {
+            font-size: 15px;
+            font-weight: 500;
+            flex: 1;
+            margin-right: 10px;
+            word-break: break-word; /* Защита от длинного текста */
+        }
+
+        .habit-item.done .habit-text-node {
+            text-decoration: line-through;
+            color: #8C8885;
+        }
+
+        .btn-box {
+            display: flex;
+            gap: 6px;
+        }
+
+        .habit-btn {
+            background: rgba(212, 163, 115, 0.1);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            color: #FFFFFF;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .habit-item.done .habit-btn {
+            background: #D4A373;
+            color: #151311;
+            border-color: #D4A373;
+        }
+
+        .del-btn {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            color: #FF6B6B;
+        }
+
+        .budget-display {
+            font-size: 36px;
+            font-weight: 700;
+            color: #D4A373;
+            text-align: center;
+            background: rgba(255,255,255,0.01);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 15px;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 180px;
+            overflow-y: auto;
+            margin-top: 15px;
+            padding-right: 5px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .history-item.plus-type { color: #81C784; border-left: 3px solid #81C784; }
+        .history-item.minus-type { color: #E57373; border-left: 3px solid #E57373; }
+        .history-comment { color: #8C8885; margin-left: 8px; }
+
+        .reset-btn {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            color: #FF6B6B;
+            margin-top: 15px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Мой Остров</h1>
+            <p>Личный интерактивный хаб за смену</p>
+        </header>
+
+        <!-- БЛОК 1: ЗАДАЧИ -->
+        <div class="card">
+            <h2>Планы на сегодня</h2>
+            <div class="input-group">
+                <input type="text" id="customHabitInput" placeholder="Добавить свой план...">
+                <button class="action-btn" id="addHabitBtn">Добавить</button>
+            </div>
+            <div class="habit-list" id="habitListContainer"></div>
+        </div>
+
+        <!-- БЛОК 2: ФИНАНСЫ И ИСТОРИЯ -->
+        <div class="card">
+            <h2>Личный бюджет и История</h2>
+            <div class="budget-display" id="balanceView">15 000 ₽</div>
+            
+            <!-- Добавлен класс responsive для корректного отображения на смартфонах -->
+            <div class="input-group responsive">
+                <input type="number" id="moneyAmountInput" placeholder="Сумма, ₽">
+                <input type="text" id="moneySourceInput" placeholder="Откуда / На что (например: Чаевые, Обед)">
+            </div>
+            <div class="input-group">
+                <button class="action-btn" style="flex: 1;" id="minusMoneyBtn">Вычесть</button>
+                <button class="action-btn" style="flex: 1; background: #E6E4E2;" id="plusMoneyBtn">Добавить</button>
+            </div>
+
+            <div class="history-list" id="historyContainer"></div>
+            
+            <button class="action-btn reset-btn" id="fullResetBtn">Сбросить всё</button>
+        </div>
+    </div>
+
+    <script>
+        // Изолированное и безопасное хранилище данных
+        let appBalance = parseInt(localStorage.getItem('saved_app_balance')) || 15000;
+        let appTasks = JSON.parse(localStorage.getItem('saved_app_tasks')) || [
+            { id: 1, name: "Выпить 2л воды", isDone: false },
+            { id: 2, name: "Потренироваться / Зал", isDone: false }
+        ];
+        let appHistory = JSON.parse(localStorage.getItem('saved_app_history')) || [];
+
+        function refreshFinances() {
+            document.getElementById('balanceView').textContent = appBalance.toLocaleString('ru-RU') + ' ₽';
+            localStorage.setItem('saved_app_balance', appBalance);
+            
+            const histContainer = document.getElementById('historyContainer');
+            histContainer.innerHTML = '';
+            appHistory.slice().reverse().forEach(item => {
+                const el = document.createElement('div');
+                el.className = `history-item ${item.mode === 'plus' ? 'plus-type' : 'minus-type'}`;
+                el.innerHTML = `
+                    <span>${item.mode === 'plus' ? '+' : '-'}${item.cash.toLocaleString('ru-RU')} ₽ <span class="history-comment">(${item.reason})</span></span>
+                `;
+                histContainer.appendChild(el);
+            });
+            localStorage.setItem('saved_app_history', JSON.stringify(appHistory));
+        }
+
+        document.getElementById('plusMoneyBtn').onclick = function() {
+            executeMoneyOp('plus');
+        };
+        document.getElementById('minusMoneyBtn').onclick = function() {
+            executeMoneyOp('minus');
+        };
+
+        function executeMoneyOp(mode) {
+            const amtIn = document.getElementById('moneyAmountInput');
+            const srcIn = document.getElementById('moneySourceInput');
+            const val = parseInt(amtIn.value);
+            const textReason = srcIn.value.trim() || (mode === 'plus' ? 'Доход' : 'Расход');
+
+            if (!isNaN(val) && val > 0) {
+                if (mode === 'plus') appBalance += val;
+                if (mode === 'minus') appBalance -= val;
+                
+                appHistory.push({ cash: val, reason: textReason, mode: mode });
+                refreshFinances();
+                amtIn.value = '';
+                srcIn.value = '';
