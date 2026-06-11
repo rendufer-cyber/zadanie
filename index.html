@@ -242,6 +242,7 @@
                 <input type="text" id="moneySourceInput" placeholder="Откуда / На что">
             </div>
             <div class="input-group">
+                <!-- ДОБАВИЛ ПРОПУЩЕННЫЕ ID ДЛЯ КНОПОК -->
                 <button class="action-btn" style="flex: 1;" id="minusMoneyBtn">Вычесть</button>
                 <button class="action-btn" style="flex: 1; background: #E6E4E2;" id="plusMoneyBtn">Добавить</button>
             </div>
@@ -253,7 +254,6 @@
     </div>
 
     <script>
-        // Инициализация базы данных
         let appBalance = parseInt(localStorage.getItem('saved_app_balance')) || 15000;
         let appTasks = JSON.parse(localStorage.getItem('saved_app_tasks')) || [
             { id: 1, name: "Выпить 2л воды", isDone: false },
@@ -308,5 +308,3 @@
                 const textSpan = document.createElement('span');
                 textSpan.className = 'habit-text-node';
                 textSpan.textContent = task.name;
-                row.appendChild(textSpan);
-
